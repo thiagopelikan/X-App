@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/menu_orders"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="Meus Pedidos"/>
+        <item
+                android:id="@+id/menu_sandwiches"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="Destaques"/>
+        <item
+                android:id="@+id/menu_promos"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Promoções"/>
+    </group>
+</menu>
