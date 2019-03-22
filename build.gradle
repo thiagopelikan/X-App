@@ -24,6 +24,8 @@ allprojects {
             name 'glide-snapshot'
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
+
+        mavenCentral()
         
     }
 }
