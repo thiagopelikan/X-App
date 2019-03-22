@@ -1,6 +1,7 @@
 package br.com.pelikan.xapp.ui.main.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.models.Sandwich
+import br.com.pelikan.xapp.ui.main.`interface`.ItemClickListener
 import br.com.pelikan.xapp.utils.GlideApp
 import br.com.pelikan.xapp.utils.NumberUtils
 import kotlinx.android.synthetic.main.layout_sandwich_item.view.*
@@ -16,7 +18,8 @@ import kotlinx.android.synthetic.main.layout_sandwich_item.view.*
 class SandwichAdapter
     (
         private val context: Context,
-        private val sandwichList: MutableList<Sandwich>
+        private val sandwichList: MutableList<Sandwich>,
+        private val itemClickListener: ItemClickListener
     ) : Adapter<SandwichAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,6 +33,7 @@ class SandwichAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sandwich = sandwichList[position]
+        holder.itemView.setOnClickListener{itemClickListener.onItemClick(sandwich.id)}
         holder.bindView(context.applicationContext, sandwich)
     }
 
@@ -41,10 +45,9 @@ class SandwichAdapter
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(context: Context, sandwich: Sandwich) {
+
             itemView.sandwichNameAndPriceTextView.text = sandwich.name
-
             itemView.sandwichIngredientsTextView.text = android.text.TextUtils.join(", ", sandwich.ingredientList)
-
             itemView.sandwichNameAndPriceTextView.text = itemView.sandwichNameAndPriceTextView.text.toString() + " (" + NumberUtils.getFormattedPrice(
                 sandwich.price!!
             ) + ") "

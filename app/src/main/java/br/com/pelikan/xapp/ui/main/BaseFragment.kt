@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import br.com.pelikan.xapp.R
+import br.com.pelikan.xapp.ui.main.`interface`.ItemClickListener
 import br.com.pelikan.xapp.utils.SpaceItemDecoration
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.layout_empty.*
 
-open class BaseFragment : Fragment()  {
+open class BaseFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayout(), container, false)

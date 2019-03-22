@@ -3,18 +3,19 @@
           package="br.com.pelikan.xapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
+            android:name=".XAppApplication"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:name=".XAppApplication"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-
+        <activity android:name=".ui.details.SandwichDetailsActivity">
+        </activity>
         <activity
                 android:name=".ui.start.SplashActivity"
                 android:screenOrientation="portrait">
@@ -24,9 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.main.MainActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+                android:name=".ui.main.MainActivity"
+                android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

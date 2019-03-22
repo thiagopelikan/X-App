@@ -12,8 +12,9 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class OrdersFragment : BaseFragment() {
 
-    private lateinit var mAdapter : OrderAdapter
-    private lateinit var mOrderViewModel: OrderViewModel
+    private lateinit var adapter : OrderAdapter
+    private lateinit var orderViewModel: OrderViewModel
+    private var shouldSkipAnimation : Boolean = false
 
     companion object {
         fun newInstance(): OrdersFragment {
@@ -23,16 +24,20 @@ class OrdersFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAdapter = OrderAdapter(context!!.applicationContext, mutableListOf())
-        mainRecyclerView.adapter = mAdapter
+        adapter = OrderAdapter(context!!.applicationContext, mutableListOf())
+        mainRecyclerView.adapter = adapter
         mainRecyclerView.layoutManager = LinearLayoutManager(context!!.applicationContext) as RecyclerView.LayoutManager?
 
-        mOrderViewModel = ViewModelProviders.of(this).get(OrderViewModel::class.java)
+        orderViewModel = ViewModelProviders.of(this).get(OrderViewModel::class.java)
 
-        mOrderViewModel.getAllOrders().observe(viewLifecycleOwner, Observer { orderList ->
+        orderViewModel.getAllOrders().observe(viewLifecycleOwner, Observer { orderList ->
             if(orderList.isNotEmpty()){
                 hideEmptyLayout()
-                mAdapter.refresh(orderList.toMutableList())
+                adapter.refresh(orderList.toMutableList())
+                if(!shouldSkipAnimation) {
+                    mainRecyclerView.scheduleLayoutAnimation();
+                    shouldSkipAnimation = true
+                }
             }else {
                 showEmptyLayout()
             }

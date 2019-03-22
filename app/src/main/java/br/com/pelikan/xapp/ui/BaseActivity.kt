@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    protected lateinit var mHandler: Handler
+    private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         super.onCreate(savedInstanceState)
-        mHandler = Handler()
-//        window.exitTransition = null
-//        window.enterTransition = null
+        handler = Handler()
+
     }
 
     override fun finish() {
