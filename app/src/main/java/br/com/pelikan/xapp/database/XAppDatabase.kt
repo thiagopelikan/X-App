@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import br.com.pelikan.xapp.dao.IngredientDao
-import br.com.pelikan.xapp.dao.SandwichDao
-import br.com.pelikan.xapp.dao.SandwichIngredientDao
+import br.com.pelikan.xapp.dao.*
 import br.com.pelikan.xapp.models.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,11 +13,15 @@ import kotlinx.coroutines.launch
 @androidx.room.Database(entities = [Ingredient::class, Sandwich::class, SandwichIngredient::class, Promotion::class, Order::class], version = 1)
 abstract class XAppDatabase : RoomDatabase() {
 
-    abstract fun SandwichIngredientDao(): SandwichIngredientDao
+    abstract fun sandwichIngredientDao(): SandwichIngredientDao
 
-    abstract fun SandwichDao(): SandwichDao
+    abstract fun sandwichDao(): SandwichDao
 
-    abstract fun IngredientDao(): IngredientDao
+    abstract fun ingredientDao(): IngredientDao
+
+    abstract fun promotionDao(): PromotionDao
+
+    abstract fun orderDao(): OrderDao
 
     private class XAppDatabaseCallback(
         private val scope: CoroutineScope
@@ -29,13 +31,13 @@ abstract class XAppDatabase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    database.IngredientDao().deleteAll()
-                    database.SandwichDao().deleteAll()
-                    database.SandwichIngredientDao().deleteAll()
-
-                    populateIngredients(database.IngredientDao())
-                    populateSandwiches(database.SandwichDao())
-                    populateSandwichIngredients(database.SandwichIngredientDao())
+//                    database.ingredientDao().deleteAll()
+//                    database.sandwichDao().deleteAll()
+//                    database.sandwichIngredientDao().deleteAll()
+//
+//                    populateIngredients(database.ingredientDao())
+//                    populateSandwiches(database.sandwichDao())
+//                    populateSandwichIngredients(database.sandwichIngredientDao())
                 }
             }
         }

@@ -13,13 +13,13 @@ interface SandwichIngredientDao {
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("""
-        SELECT * FROM Ingredient INNER JOIN SandwichIngredient ON
-        Ingredient.id = SandwichIngredient.ingredientId WHERE
-        SandwichIngredient.sandwichId = :sandwichId
+        SELECT * FROM ingredients INNER JOIN sandwiches_join_ingredients ON
+        ingredients.id = sandwiches_join_ingredients.ingredientId WHERE
+        sandwiches_join_ingredients.sandwichId = :sandwichId
         """)
     fun getIngredientsFromSandwich(sandwichId: Int): List<Ingredient>
 
-    @Query("DELETE from SandwichIngredient")
+    @Query("DELETE from sandwiches_join_ingredients")
     fun deleteAll()
 
     @Insert(onConflict = REPLACE)

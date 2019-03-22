@@ -1,11 +1,11 @@
-package br.com.pelikan.xapp.sync.repository.debug
+package br.com.pelikan.xapp.sync.repository.dummy
 
 import br.com.pelikan.xapp.sync.repository.SyncRepository
 import br.com.pelikan.xapp.sync.repository.RepositoryFactory
 
-class DebugRepositoryFactory : RepositoryFactory {
+class DummyRepositoryFactory : RepositoryFactory {
 
     override fun forSync(): SyncRepository {
-        return DebugSyncRepository()
+        return DummySyncRepository()
     }
 }

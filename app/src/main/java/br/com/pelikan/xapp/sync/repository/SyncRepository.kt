@@ -6,6 +6,6 @@ import io.reactivex.Observable
 
 interface SyncRepository {
     fun sync(lastUpdate: Long,
-             newOrder: Order
+             newOrder: Order?
     ): Observable<DataContext>
 }

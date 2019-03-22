@@ -10,10 +10,8 @@
             android:id="@+id/mainRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"/>
+            android:background="#FFF"/>
 
     <include layout="@layout/layout_empty" android:visibility="gone"/>
-
-    <include layout="@layout/layout_connection_error" android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

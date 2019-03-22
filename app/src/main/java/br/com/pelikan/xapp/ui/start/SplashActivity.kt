@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import br.com.pelikan.xapp.R
+import br.com.pelikan.xapp.sync.worker.SyncWorkerUtils
 import br.com.pelikan.xapp.ui.BaseActivity
 import br.com.pelikan.xapp.ui.main.MainActivity
 
@@ -12,21 +14,19 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(br.com.pelikan.xapp.R.layout.activity_splash)
+        setContentView(R.layout.activity_splash)
 
-        //TODO CALL WORKER
-
+        syncDataContext()
         Handler().postDelayed({goToMainActivity()}, SPLASH_TIME)
+    }
+
+    private fun syncDataContext(){
+        SyncWorkerUtils.callWorker()
     }
 
     private fun goToMainActivity(){
         startActivity(Intent(this, MainActivity::class.java))
         finish()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     companion object {

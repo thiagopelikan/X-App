@@ -1,6 +1,7 @@
 package br.com.pelikan.xapp.sections
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.ui.main.OrdersFragment
 import br.com.pelikan.xapp.ui.main.PromosFragment

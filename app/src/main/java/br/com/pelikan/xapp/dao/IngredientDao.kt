@@ -12,13 +12,16 @@ import br.com.pelikan.xapp.models.Sandwich
 @Dao
 interface IngredientDao {
 
-    @Query("SELECT * from Ingredient")
+    @Query("SELECT * from ingredients")
     fun getAll(): LiveData<List<Ingredient>>
 
     @Insert(onConflict = REPLACE)
     fun insert(ingredient: Ingredient)
 
-    @Query("DELETE from Ingredient")
+    @Insert(onConflict = REPLACE)
+    fun insertAll(ingredientList: List<Ingredient>)
+
+    @Query("DELETE from ingredients")
     fun deleteAll()
 
     @Delete

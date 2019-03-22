@@ -7,6 +7,7 @@ import androidx.room.Index
 
 
 @Entity(
+    tableName = "sandwiches_join_ingredients",
     primaryKeys = ["ingredientId", "sandwichId"],
     foreignKeys = [
         ForeignKey(

@@ -2,8 +2,8 @@ package br.com.pelikan.xapp.sync.repository.release
 
 import br.com.pelikan.xapp.models.DataContext
 import br.com.pelikan.xapp.models.Order
-import br.com.pelikan.xapp.sync.json.SyncBodyJson
-import br.com.pelikan.xapp.sync.json.SyncResponseJson
+import br.com.pelikan.xapp.sync.json.DataContextBodyJson
+import br.com.pelikan.xapp.sync.json.DataContextResponseJson
 import br.com.pelikan.xapp.sync.repository.SyncRepository
 import br.com.pelikan.xapp.sync.services.XAppApi
 import io.reactivex.Observable
@@ -17,16 +17,16 @@ class ServiceSyncRepository : SyncRepository {
 
     override fun sync(
         lastUpdate: Long,
-        newOrder: Order): Observable<DataContext> {
+        newOrder: Order?): Observable<DataContext> {
 
         val subject = PublishSubject.create<DataContext>()
 
-        var syncBodyJson = SyncBodyJson(lastUpdate, newOrder.id, null, 0.0)
+        var syncBodyJson = DataContextBodyJson(lastUpdate, null, null, null)
 
         val call = XAppApi.services.sync(syncBodyJson)
 
-        call.enqueue(object : Callback<SyncResponseJson> {
-            override fun onResponse(call: Call<SyncResponseJson>, response: Response<SyncResponseJson>) {
+        call.enqueue(object : Callback<DataContextResponseJson> {
+            override fun onResponse(call: Call<DataContextResponseJson>, response: Response<DataContextResponseJson>) {
                 try {
                     subject.onNext(response.body()!!.toObject())
                 }catch (e : Exception){
@@ -34,7 +34,7 @@ class ServiceSyncRepository : SyncRepository {
                 }
             }
 
-            override fun onFailure(call: Call<SyncResponseJson>, t: Throwable) {
+            override fun onFailure(call: Call<DataContextResponseJson>, t: Throwable) {
                 subject.onError(t)
             }
         })

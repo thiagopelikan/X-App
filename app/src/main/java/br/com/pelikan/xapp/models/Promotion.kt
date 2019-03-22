@@ -3,11 +3,11 @@ package br.com.pelikan.xapp.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "promotions")
 data class Promotion (
 
     @PrimaryKey var id: Int,
-    var name: String?,
-    var description: String?
+    var name: String,
+    var description: String
 
 )

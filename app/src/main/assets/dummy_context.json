@@ -1,0 +1,106 @@
+{
+    "sandwiches": [
+        {
+            "id": 1,
+            "name": "X-Bacon",
+            "ingredients": [
+                2,
+                3,
+                5,
+                6
+            ],
+            "image": "https://goo.gl/W9WdaF"
+        },
+        {
+            "id": 2,
+            "name": "X-Burger",
+            "ingredients": [
+                3,
+                5,
+                6
+            ],
+            "image": "https://goo.gl/Cjfxi9"
+        },
+        {
+            "id": 3,
+            "name": "X-Egg",
+            "ingredients": [
+                3,
+                4,
+                5,
+                6
+            ],
+            "image": "https://goo.gl/x4rNIq"
+        },
+        {
+            "id": 4,
+            "name": "X-Egg Bacon",
+            "ingredients": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "image": "https://goo.gl/2L0lqg"
+        }
+    ],
+    "ingredients": [
+        {
+            "id": 1,
+            "name": "Alface",
+            "price": 0.4,
+            "image": "https://goo.gl/9DhCgk"
+        },
+        {
+            "id": 2,
+            "name": "Bacon",
+            "price": 2,
+            "image": "https://goo.gl/8qkVH0"
+        },
+        {
+            "id": 3,
+            "name": "Hamburguer de Carne",
+            "price": 3,
+            "image": "https://goo.gl/U01SnT"
+        },
+        {
+            "id": 4,
+            "name": "Ovo",
+            "price": 0.8,
+            "image": "https://goo.gl/weL1Rj"
+        },
+        {
+            "id": 5,
+            "name": "Queijo",
+            "price": 1.5,
+            "image": "https://goo.gl/D69Ow2"
+        },
+        {
+            "id": 6,
+            "name": "Pão com gergelim",
+            "price": 1,
+            "image": "https://goo.gl/evgjyj"
+        }
+    ],
+    "promos": [
+        {
+            "id": 1,
+            "name": "Light",
+            "description": "Se o lanche tem alface e não tem bacon, ganha 10% de desconto."
+        },
+        {
+            "id": 2,
+            "name": "Muita carne",
+            "description": "A cada 3 porções de carne só paga 2. Se o lanche tiver 6 porções, pagará 4. Assim por diante"
+        },
+        {
+            "id": 3,
+            "name": "Muito queijo",
+            "description": "A cada 3 porções de queijo só paga 2. Se o lanche tiver 6 porções, pagará 4. Assim por diante"
+        }
+    ],
+    "orders": [],
+    "last_update": 1553254921954
+}

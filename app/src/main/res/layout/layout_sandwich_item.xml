@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="20dp"
+    android:background="#cccccc"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless">
 
     <ImageView
             android:id="@+id/sandwichImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
             android:adjustViewBounds="true"
-            android:src="@drawable/loading_placeholder"
-            android:maxHeight="250dp"/>
+            android:src="@drawable/loading_placeholder"/>
 
     <TextView
-            android:id="@+id/sandwichNameTextView"
+            android:id="@+id/sandwichNameAndPriceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:textStyle="bold"
-            style="@style/TextNormal"/>
+            tools:text="X-BURGER (R$19,90)"
+            style="@style/TextBig"/>
 
-</RelativeLayout>
+    <TextView
+            android:id="@+id/sandwichIngredientsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="10dp"
+            tools:text="Queijo, Alface, Cebola"
+            style="@style/TextSmall"/>
+</LinearLayout>

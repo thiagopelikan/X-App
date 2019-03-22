@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.models.Sandwich
 import br.com.pelikan.xapp.utils.GlideApp
+import br.com.pelikan.xapp.utils.NumberUtils
 import kotlinx.android.synthetic.main.layout_sandwich_item.view.*
+
 
 class SandwichAdapter
     (
         private val context: Context,
-        private val content: MutableList<Sandwich>
+        private val sandwichList: MutableList<Sandwich>
     ) : Adapter<SandwichAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,30 +25,38 @@ class SandwichAdapter
     }
 
     override fun getItemCount(): Int {
-        return content.size
+        return sandwichList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val content = content[position]
-        holder.bindView(context.applicationContext, content)
+        val sandwich = sandwichList[position]
+        holder.bindView(context.applicationContext, sandwich)
     }
 
-    fun refresh(contentList: MutableList<Sandwich>) {
-        this.content.clear()
-        this.content.addAll(contentList)
+    fun refresh(sandwichList: MutableList<Sandwich>) {
+        this.sandwichList.clear()
+        this.sandwichList.addAll(sandwichList)
         notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(context: Context, sandwich: Sandwich) {
-            itemView.sandwichNameTextView.text = sandwich.name
+            itemView.sandwichNameAndPriceTextView.text = sandwich.name
+
+            itemView.sandwichIngredientsTextView.text = android.text.TextUtils.join(", ", sandwich.ingredientList)
+
+            itemView.sandwichNameAndPriceTextView.text = itemView.sandwichNameAndPriceTextView.text.toString() + " (" + NumberUtils.getFormattedPrice(
+                sandwich.price!!
+            ) + ") "
+
             itemView.sandwichImageView.post {
                 GlideApp
                     .with(context)
                     .load(sandwich.image)
                     .placeholder(R.drawable.loading_placeholder)
                     .error(R.drawable.error_placeholder)
-                    .centerCrop()
+                    .override(itemView.sandwichImageView.width, itemView.sandwichImageView.height)
+                    .centerInside()
                     .into(itemView.sandwichImageView)
             }
         }
