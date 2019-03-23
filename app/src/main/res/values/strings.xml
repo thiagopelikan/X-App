@@ -5,4 +5,7 @@
     <string name="section_title_promos">Promoções</string>
     <string name="promo_title">Confira nossas promoções:</string>
     <string name="default_empty_msg">Nada encontrado, volte novamente mais tarde</string>
+    <string name="error_sync_title">Falhou!</string>
+    <string name="error_default">Não foi possível conectar ao servidor, verifique sua conexão e tente novamente</string>
+    <string name="ok">OK</string>
 </resources>

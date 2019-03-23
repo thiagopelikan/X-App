@@ -7,20 +7,23 @@ class DataContextResponseJson(
     @field:SerializedName("last_update") val lastUpdate: Long,
     @field:SerializedName("orders") val orderList: List<OrderResponseJson>?,
     @field:SerializedName("promos") val promoList: List<PromosResponseJson>?,
-    @field:SerializedName("ingredientList") val ingredientList: List<IngredientResponseJson>?,
+    @field:SerializedName("ingredients") val ingredientList: List<IngredientResponseJson>?,
     @field:SerializedName("sandwiches") val sandwichList: List<SandwichResponseJson>?
 ){
 
-    public fun toObject() : DataContext{
+    fun toObject() : DataContext{
         return DataContext(
             lastUpdate,
-            toObjectList(sandwichList!!),
-            toObjectList(ingredientList!!),
-            toObjectList(promoList!!),
-            toObjectList(orderList!!));
+            toObjectList(sandwichList),
+            toObjectList(ingredientList),
+            toObjectList(promoList),
+            toObjectList(orderList));
     }
 
-    private fun <T, TT : BaseResponseJson<T>>toObjectList(baseResponseJsonList: List<TT>) : List<T>?{
+    private fun <T, TT : BaseResponseJson<T>>toObjectList(baseResponseJsonList: List<TT>?) : List<T>?{
+        if(baseResponseJsonList == null)
+            return null
+
         val objectList = ArrayList<T>()
         for(item in baseResponseJsonList){
             objectList.add(item.toObject())
@@ -68,15 +71,17 @@ class IngredientResponseJson (
 class SandwichResponseJson (
     @field:SerializedName("id") val id: Int,
     @field:SerializedName("name") val name: String,
-    @field:SerializedName("ingredientList") val ingredientList: List<Int>,
+    @field:SerializedName("ingredients") val ingredientList: List<Int>,
     @field:SerializedName("image") val image: String
 ) : BaseResponseJson<Sandwich>() {
 
     public override fun toObject() : Sandwich{
-        val ingredients = ArrayList<Ingredient>()
+        val ingredients = ArrayList<Int>()
         for(ingredientId in ingredientList){
-            ingredients.add(Ingredient(ingredientId))
+            ingredients.add(ingredientId)
         }
-        return Sandwich(id, name, image, ingredients);
+        val sandwich = Sandwich(id, name, image, emptyList())
+        sandwich.ingredientIdList = ingredients
+        return sandwich;
     }
 }

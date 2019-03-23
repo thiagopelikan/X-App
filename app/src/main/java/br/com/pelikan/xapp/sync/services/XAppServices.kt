@@ -9,6 +9,6 @@ import retrofit2.http.POST
 
 interface XAppServices {
 
-    @POST("/context")
+    @POST("/api/context")
     fun sync(@Body syncBodyJson: DataContextBodyJson): Call<DataContextResponseJson>
 }

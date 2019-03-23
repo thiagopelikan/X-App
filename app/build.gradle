@@ -26,7 +26,7 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
             versionNameSuffix '-DEBUG'
-            buildConfigField "String", "ENDPOINT", "\"http://localhost:8080\""
+            buildConfigField "String", "ENDPOINT", "\"http://192.168.0.114:8080\""
         }
         release {
             debuggable false

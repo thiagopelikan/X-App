@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ServiceSyncRepository : SyncRepository {
+class ServerSyncRepository : SyncRepository {
 
     override fun sync(
         lastUpdate: Long,
