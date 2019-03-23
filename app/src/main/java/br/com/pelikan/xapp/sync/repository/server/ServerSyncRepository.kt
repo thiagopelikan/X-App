@@ -21,7 +21,12 @@ class ServerSyncRepository : SyncRepository {
 
         val subject = PublishSubject.create<DataContext>()
 
-        var syncBodyJson = DataContextBodyJson(lastUpdate, null, null, null)
+        var syncBodyJson : DataContextBodyJson
+        if(newOrder == null){
+            syncBodyJson = DataContextBodyJson(lastUpdate)
+        }else{
+            syncBodyJson = DataContextBodyJson(lastUpdate, newOrder.sandwich!!.id, newOrder.extraIngredientIdList, newOrder.price)
+        }
 
         val call = XAppApi.services.sync(syncBodyJson)
 

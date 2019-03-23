@@ -14,6 +14,9 @@ interface SandwichDao {
     @Query("SELECT * from sandwiches")
     fun getAll(): LiveData<List<Sandwich>>
 
+    @Query("SELECT * from sandwiches where id = :sandwichId")
+    fun getSandwich(sandwichId : Int): Sandwich?
+
     @Insert(onConflict = REPLACE)
     fun insert(sandwich: Sandwich)
 

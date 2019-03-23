@@ -8,4 +8,8 @@
     <string name="error_sync_title">Falhou!</string>
     <string name="error_default">Não foi possível conectar ao servidor, verifique sua conexão e tente novamente</string>
     <string name="ok">OK</string>
+    <string name="add_order">Adicionar</string>
+    <string name="discount_title">Descontos promocionais:</string>
+    <string name="ingredients_extra">Ingredientes extra:</string>
+    <string name="orders_title">Detalhes do pedido:</string>
 </resources>

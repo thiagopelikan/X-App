@@ -37,11 +37,14 @@ abstract class BaseResponseJson<T>{
 }
 
 class OrderResponseJson(
-        @field:SerializedName("id") val id: Int
+        @field:SerializedName("id") val id: Int,
+        @field:SerializedName("id_sandwich") val sandwichId: Int,
+        @field:SerializedName("extras") val extrasIngredientIdList: List<Int>?,
+        @field:SerializedName("price") val price: Double
     ) : BaseResponseJson<Order>() {
 
-    public override fun toObject() : Order{
-        return Order(id);
+    override fun toObject() : Order{
+        return Order(id, price, sandwichId, extrasIngredientIdList as MutableList<Int>);
     }
 }
 
@@ -51,7 +54,7 @@ class PromosResponseJson (
     @field:SerializedName("description") val description: String
 ) : BaseResponseJson<Promotion>() {
 
-    public override fun toObject() : Promotion{
+    override fun toObject() : Promotion{
         return Promotion(id, name, description);
     }
 }
@@ -63,7 +66,7 @@ class IngredientResponseJson (
     @field:SerializedName("image") val image: String
 ) : BaseResponseJson<Ingredient>() {
 
-    public override fun toObject() : Ingredient{
+    override fun toObject() : Ingredient{
         return Ingredient(id, name, price, image);
     }
 }
@@ -75,7 +78,7 @@ class SandwichResponseJson (
     @field:SerializedName("image") val image: String
 ) : BaseResponseJson<Sandwich>() {
 
-    public override fun toObject() : Sandwich{
+    override fun toObject() : Sandwich{
         val ingredients = ArrayList<Int>()
         for(ingredientId in ingredientList){
             ingredients.add(ingredientId)

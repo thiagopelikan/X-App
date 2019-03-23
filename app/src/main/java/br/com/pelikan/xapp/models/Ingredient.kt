@@ -14,6 +14,18 @@ data class Ingredient (
 ){
     constructor(id: Int):this(id,null,null, null)
 
+    override fun equals(other: Any?): Boolean{
+        if(other is Ingredient){
+            return this.id == other.id
+        }
+
+        if(other is Int){
+            return this.id == other
+        }
+
+        return false
+    }
+
     override fun toString(): String {
        return name!!
     }

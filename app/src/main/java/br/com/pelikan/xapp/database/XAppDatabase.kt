@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@androidx.room.Database(entities = [Ingredient::class, Sandwich::class, SandwichIngredient::class, Promotion::class, Order::class], version = 1)
+@androidx.room.Database(entities = [Ingredient::class, Sandwich::class, SandwichIngredient::class, Promotion::class, Order::class, OrderIngredientExtras::class], version = 1)
 abstract class XAppDatabase : RoomDatabase() {
 
     abstract fun sandwichIngredientDao(): SandwichIngredientDao
@@ -22,6 +22,8 @@ abstract class XAppDatabase : RoomDatabase() {
     abstract fun promotionDao(): PromotionDao
 
     abstract fun orderDao(): OrderDao
+
+    abstract fun orderIngredientExtras(): OrderIngredientExtrasDao
 
     private class XAppDatabaseCallback(
         private val scope: CoroutineScope

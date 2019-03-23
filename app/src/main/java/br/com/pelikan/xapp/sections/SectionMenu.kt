@@ -3,7 +3,7 @@ package br.com.pelikan.xapp.sections
 import androidx.fragment.app.Fragment
 import br.com.pelikan.xapp.utils.SimpleSupplier
 
-class SectionsMenu(
+class SectionMenu(
     val sectionId: Int,
     val name: String,
     val fragment: SimpleSupplier<Fragment>?

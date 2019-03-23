@@ -6,7 +6,8 @@ import androidx.lifecycle.MediatorLiveData
 import br.com.pelikan.xapp.dao.SandwichDao
 import br.com.pelikan.xapp.dao.SandwichIngredientDao
 import br.com.pelikan.xapp.models.Sandwich
-import br.com.pelikan.xapp.utils.IngredientUtils
+import br.com.pelikan.xapp.utils.PriceUtils
+import kotlinx.coroutines.*
 
 class SandwichIngredientViewModel(application: Application) : BaseViewModel(application) {
 
@@ -22,7 +23,7 @@ class SandwichIngredientViewModel(application: Application) : BaseViewModel(appl
             if (sandwichListLive != null) {
                 Thread(Runnable {
                     for (sandwich in sandwichListLive) {
-                        addIngredientsToSandwich(sandwich)
+                        updateIngredientsAndPriceForSandwich(sandwich)
                     }
                     allSandwichesWithIngredients.postValue(sandwichListLive)
                 }).start()
@@ -32,13 +33,24 @@ class SandwichIngredientViewModel(application: Application) : BaseViewModel(appl
         }
     }
 
-    private fun addIngredientsToSandwich(sandwich: Sandwich): Sandwich {
+    private fun updateIngredientsAndPriceForSandwich(sandwich: Sandwich){
         sandwich.ingredientList = sandwichIngredientDao.getIngredientsFromSandwich(sandwich.id)
-        sandwich.price = IngredientUtils.getPriceFromIngredients(sandwich.ingredientList);
-        return sandwich
+        sandwich.price = PriceUtils.getPriceFromIngredients(sandwich.ingredientList)
     }
 
     fun getAllSandwiches(): LiveData<List<Sandwich>> {
         return allSandwichesWithIngredients
+    }
+
+    fun getSandwichAsync(sandwichId : Int): Deferred<Sandwich?>{
+        return CoroutineScope(Dispatchers.IO).async {
+            val sandwich = sandwichDao.getSandwich(sandwichId)
+            return@async (if (sandwich != null) {
+                updateIngredientsAndPriceForSandwich(sandwich)
+                sandwich
+            } else {
+                null
+            })
+        }
     }
 }

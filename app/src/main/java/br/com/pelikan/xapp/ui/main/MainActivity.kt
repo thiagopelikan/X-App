@@ -5,7 +5,7 @@ import android.view.MenuItem
 import androidx.annotation.NonNull
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.sections.SectionMenuManager
-import br.com.pelikan.xapp.sections.SectionsMenu
+import br.com.pelikan.xapp.sections.SectionMenu
 import br.com.pelikan.xapp.ui.BaseActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.*
@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() , BottomNavigationView.OnNavigationItemSelec
         onNavigationItemSelected(menu.findItem(R.id.menu_sandwiches))
     }
 
-    private fun onChangeItem(section: SectionsMenu) {
+    private fun onChangeItem(section: SectionMenu) {
         if (!isFinishing) {
             val fragmentManager = supportFragmentManager
             val newFragment = section.getFragment()

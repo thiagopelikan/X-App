@@ -15,6 +15,9 @@ interface IngredientDao {
     @Query("SELECT * from ingredients")
     fun getAll(): LiveData<List<Ingredient>>
 
+    @Query("SELECT * from ingredients where id = :ingredientId")
+    fun getIngredient(ingredientId : Int): Ingredient?
+
     @Insert(onConflict = REPLACE)
     fun insert(ingredient: Ingredient)
 

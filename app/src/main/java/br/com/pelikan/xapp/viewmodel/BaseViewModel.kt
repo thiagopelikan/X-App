@@ -13,7 +13,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext
         get() = parentJob + Dispatchers.Main
-    private val scope = CoroutineScope(coroutineContext)
+    val scope = CoroutineScope(coroutineContext)
 
     var xAppDatabase: XAppDatabase
 
