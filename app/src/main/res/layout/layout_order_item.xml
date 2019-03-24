@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="150dp"
         android:orientation="vertical"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:background="#cccccc"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="#cccccc">
+        android:clickable="true"
+        android:focusable="true">
 
-    <LinearLayout
+    <ImageView
+            android:id="@+id/orderImageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:src="@drawable/loading_placeholder"
+            android:transitionName="image"/>
+
+    <TextView
+            android:id="@+id/orderNameAndPriceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            tools:text="X-BURGER (R$19,90)"
+            style="@style/TextBig"/>
 
-        <TextView
-                android:id="@+id/promoTitleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginStart="10dp"
-                android:textStyle="bold"
-                tools:text="Promoção D´hora"
-                style="@style/TextBig"
-                android:textAlignment="center"/>
+    <TextView
+            android:id="@+id/orderIngredientsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="10dp"
+            tools:text="Queijo, Alface, Cebola"
+            style="@style/TextSmall"/>
 
-        <TextView
-                android:id="@+id/promoDescriptionTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginStart="10dp"
-                tools:text="Super promoção na compra de bla bla bla bla bla"
-                style="@style/TextNormal"
-                android:textAlignment="center"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    <TextView
+            android:id="@+id/orderIngredientsExtraTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="10dp"
+            tools:text="Extra: Queijo, Alface, Cebola"
+            style="@style/TextSmall"/>
+</LinearLayout>

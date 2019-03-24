@@ -101,6 +101,13 @@
             "description": "A cada 3 porções de queijo só paga 2. Se o lanche tiver 6 porções, pagará 4. Assim por diante"
         }
     ],
-    "orders": [],
+    "orders":[
+        {
+            "id":1,
+            "sandwichId":2,
+            "extraIngredientIdList":[5,5,3],
+            "price":10
+        }
+    ],
     "last_update": 1553254921954
 }

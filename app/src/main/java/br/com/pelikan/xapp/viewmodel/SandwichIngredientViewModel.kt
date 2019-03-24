@@ -33,7 +33,7 @@ class SandwichIngredientViewModel(application: Application) : BaseViewModel(appl
         }
     }
 
-    private fun updateIngredientsAndPriceForSandwich(sandwich: Sandwich){
+    fun updateIngredientsAndPriceForSandwich(sandwich: Sandwich){
         sandwich.ingredientList = sandwichIngredientDao.getIngredientsFromSandwich(sandwich.id)
         sandwich.price = PriceUtils.getPriceFromIngredients(sandwich.ingredientList)
     }

@@ -111,10 +111,16 @@
 
     </LinearLayout>
 
-    <ProgressBar
-            android:id="@+id/detailsProgressBar"
+    <RelativeLayout
+            android:id="@+id/detailsProgressLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:background="#60000000"
+            android:visibility="gone">
+        <ProgressBar
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

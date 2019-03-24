@@ -19,4 +19,5 @@ data class Sandwich (
     constructor():this(0,"","", emptyList(), emptyList(), null)
 
     constructor(id: Int, name: String?, image: String?, ingredientList: List<Ingredient>):this(id,name,image, ingredientList, emptyList(), null)
+
 }

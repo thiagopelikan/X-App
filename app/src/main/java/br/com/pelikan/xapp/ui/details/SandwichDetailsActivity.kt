@@ -3,10 +3,13 @@ package br.com.pelikan.xapp.ui.details
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.models.Order
 import br.com.pelikan.xapp.models.Promotion
@@ -67,7 +70,7 @@ class SandwichDetailsActivity : BaseActivity() {
             override fun onItemChange(itemId: Int, quantity: Int) {
 
                 scope.launch {
-                    val changedOrder =  orderViewModel.handleExtraIngredient(order, itemId, quantity, promoList).await()
+                    val changedOrder =  orderViewModel.handleExtraIngredientAsync(order, itemId, quantity, promoList).await()
 
                     if(changedOrder == null){
                         //SOMETHING GETS WRONG
@@ -80,7 +83,7 @@ class SandwichDetailsActivity : BaseActivity() {
 
         })
         detailsSandwichExtraIngredientsRecyclerView.adapter = ingredientsDetailAdapter
-        detailsSandwichExtraIngredientsRecyclerView.layoutManager = LinearLayoutManager(applicationContext) as RecyclerView.LayoutManager?
+        detailsSandwichExtraIngredientsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
 
         promoDetailAdapter = PromoDetailsAdapter(applicationContext, mutableListOf())
         detailsSandwichDiscountRecyclerView.adapter = promoDetailAdapter
@@ -96,9 +99,16 @@ class SandwichDetailsActivity : BaseActivity() {
         })
 
         detailsTotalPriceButton.setOnClickListener {
-            SyncWorkerUtils.callWorker(order)
-            //TODO SHOW PROGRESS BAR
-            //TODO WAIT ADD PROCESS
+            detailsProgressLayout.visibility = View.VISIBLE
+            WorkManager.getInstance().getWorkInfoByIdLiveData( SyncWorkerUtils.callWorker(order)).observe(this, Observer { workInfo ->
+                if(workInfo.state == WorkInfo.State.SUCCEEDED){
+                    Toast.makeText(this, getString(R.string.order_added), Toast.LENGTH_SHORT).show()
+                    finish()
+                }else if((workInfo.state == WorkInfo.State.FAILED) || (workInfo.state == WorkInfo.State.BLOCKED) || (workInfo.state == WorkInfo.State.CANCELLED)){
+                    Toast.makeText(this, getString(R.string.order_add_error), Toast.LENGTH_SHORT).show()
+                    detailsProgressLayout.visibility = View.GONE
+                }
+            })
         }
 
         scope.launch {
@@ -147,7 +157,6 @@ class SandwichDetailsActivity : BaseActivity() {
         detailsToolbarTitle.visibility = View.GONE
 
         setSupportActionBar(detailsToolbar)
-        supportActionBar?.title = order.sandwich?.name
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
@@ -176,7 +185,9 @@ class SandwichDetailsActivity : BaseActivity() {
     }
 
     private fun updateValues(){
-        detailsSandwichNameTextView.text = order.sandwich?.name
+        supportActionBar?.title = order.getSandwichRealName()
+
+        detailsSandwichNameTextView.text = order.getSandwichRealName()
         detailsSandwichIngredientsTextView.text = android.text.TextUtils.join(", ", order.sandwich?.ingredientList)
         detailsSandwichIngredientsPriceTextView.text = PriceUtils.getFormattedPrice(PriceUtils.getPriceFromIngredients(order.sandwich?.ingredientList))
         detailsSandwichExtraIngredientsPriceTextView.text = PriceUtils.getFormattedPrice(PriceUtils.getPriceFromIngredients(order.extraIngredientList))
