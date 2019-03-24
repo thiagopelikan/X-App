@@ -31,5 +31,7 @@ class XAppApplication : MultiDexApplication() {
         app = this
     }
 
-    //TODO IMPLEMENT UNIT TEST
+    //TODO IMPLEMENT DAO TEST
+    //TODO IMPLEMENT ROOM TEST
+    //TODO IMPLEMENT VIEWMODEL
 }

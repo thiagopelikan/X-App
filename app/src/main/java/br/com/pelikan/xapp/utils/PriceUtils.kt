@@ -98,6 +98,11 @@ class PriceUtils{
                             promoList.add(promotion)
                             foundPromos --;
                         }
+
+                        if(promoList.isEmpty()){
+                            return null
+                        }
+
                         return promoList
                     }
                 }
@@ -111,6 +116,11 @@ class PriceUtils{
                             promoList.add(promotion)
                             foundPromos --;
                         }
+
+                        if(promoList.isEmpty()){
+                            return null
+                        }
+
                         return promoList
                     }
                 }

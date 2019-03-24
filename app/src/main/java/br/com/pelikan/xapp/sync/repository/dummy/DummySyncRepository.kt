@@ -2,6 +2,7 @@ package br.com.pelikan.xapp.sync.repository.dummy
 
 import android.os.Handler
 import android.os.Looper
+import br.com.pelikan.xapp.XAppApplication
 import br.com.pelikan.xapp.models.DataContext
 import br.com.pelikan.xapp.sync.payload.DataContextResponseJson
 import br.com.pelikan.xapp.sync.repository.SyncRepository
@@ -25,7 +26,7 @@ class DummySyncRepository : SyncRepository {
         try {
             if(sandwichId == null) {
                 val dummyDataContext = Gson().fromJson<DataContextResponseJson>(
-                    FileUtils.readJsonFromAssetsFile("dummy_context.json"),
+                    FileUtils.readJsonFromAssetsFile(XAppApplication.getApplicationContext(), "dummy_context.json"),
                     DataContextResponseJson::class.java
                 )
                 Handler(Looper.getMainLooper()).postDelayed(

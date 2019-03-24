@@ -1,14 +1,14 @@
 package br.com.pelikan.xapp.utils
 
-import br.com.pelikan.xapp.XAppApplication
+import android.content.Context
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class FileUtils{
 
     companion object {
-        fun readJsonFromAssetsFile(fileName: String): String {
-            val br = BufferedReader(InputStreamReader(XAppApplication.getApplicationContext().assets.open(fileName)))
+        fun readJsonFromAssetsFile(context : Context, fileName: String): String {
+            val br = BufferedReader(InputStreamReader(context.assets.open(fileName)))
             var json : String
             try {
                 val sb = StringBuilder()

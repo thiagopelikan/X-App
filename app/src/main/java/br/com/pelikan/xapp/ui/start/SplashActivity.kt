@@ -49,6 +49,6 @@ class SplashActivity : BaseActivity() {
     }
 
     companion object {
-        const val SPLASH_TIME : Long = 0
+        const val SPLASH_TIME : Long = 2000
     }
 }

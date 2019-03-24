@@ -1,6 +1,7 @@
 package br.com.pelikan.xapp.sync.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -77,6 +78,7 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : Worker(cont
                             insertOrderList(dataContext.orderList)
 
                             XAppApplication.getSharedPreferences().edit().putLong(PREFS_LAST_UPDATE, dataContext.lastUpdate).apply()
+                            Log.d("TAG", "SYNC DONE");
                         }
                     }
 
