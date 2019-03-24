@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.pelikan.xapp.ui.details.SandwichDetailsActivity
-import br.com.pelikan.xapp.ui.main.`interface`.SandwichItemClickListener
+import br.com.pelikan.xapp.ui.main.interfaces.SandwichItemClickListener
 import br.com.pelikan.xapp.ui.main.adapter.SandwichAdapter
 import br.com.pelikan.xapp.viewmodel.SandwichIngredientViewModel
 import kotlinx.android.synthetic.main.fragment_main.*

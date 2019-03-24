@@ -9,7 +9,7 @@ class FileUtils{
     companion object {
         fun readJsonFromAssetsFile(fileName: String): String {
             val br = BufferedReader(InputStreamReader(XAppApplication.getApplicationContext().assets.open(fileName)))
-            var json = ""
+            var json : String
             try {
                 val sb = StringBuilder()
                 var line: String? = br.readLine()

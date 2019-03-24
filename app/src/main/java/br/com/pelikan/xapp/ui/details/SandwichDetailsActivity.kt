@@ -13,11 +13,12 @@ import androidx.work.WorkManager
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.models.Order
 import br.com.pelikan.xapp.models.Promotion
+import br.com.pelikan.xapp.policies.OrderPolicy
 import br.com.pelikan.xapp.sync.worker.SyncWorkerUtils
 import br.com.pelikan.xapp.ui.BaseActivity
-import br.com.pelikan.xapp.ui.main.`interface`.IngredientItemOnChangeListener
-import br.com.pelikan.xapp.ui.main.adapter.IngredientsDetailAdapter
-import br.com.pelikan.xapp.ui.main.adapter.PromoDetailsAdapter
+import br.com.pelikan.xapp.ui.details.adapter.IngredientDetailAdapter
+import br.com.pelikan.xapp.ui.details.adapter.PromoDetailsAdapter
+import br.com.pelikan.xapp.ui.details.interfaces.IngredientItemOnChangeListener
 import br.com.pelikan.xapp.utils.GlideApp
 import br.com.pelikan.xapp.utils.PriceUtils
 import br.com.pelikan.xapp.viewmodel.IngredientViewModel
@@ -41,7 +42,7 @@ class SandwichDetailsActivity : BaseActivity() {
         get() = parentJob + Dispatchers.Main
     val scope = CoroutineScope(coroutineContext)
 
-    private lateinit var ingredientsDetailAdapter : IngredientsDetailAdapter
+    private lateinit var ingredientDetailAdapter : IngredientDetailAdapter
     private lateinit var promoDetailAdapter : PromoDetailsAdapter
 
     private lateinit var orderViewModel: OrderViewModel
@@ -66,26 +67,31 @@ class SandwichDetailsActivity : BaseActivity() {
 
         injectExtras()
 
-        ingredientsDetailAdapter = IngredientsDetailAdapter(applicationContext, mutableListOf(), object : IngredientItemOnChangeListener {
-            override fun onItemChange(itemId: Int, quantity: Int) {
+        ingredientDetailAdapter = IngredientDetailAdapter(
+            applicationContext,
+            mutableListOf(),
+            object : IngredientItemOnChangeListener {
+                override fun onItemChange(itemId: Int, quantity: Int) {
 
-                scope.launch {
-                    val changedOrder =  orderViewModel.handleExtraIngredientAsync(order, itemId, quantity, promoList).await()
+                    scope.launch {
+                        val changedOrder =
+                            orderViewModel.handleExtraIngredientAsync(order, itemId, quantity, promoList).await()
 
-                    if(changedOrder == null){
-                        //SOMETHING GETS WRONG
-                        finish()
+                        if (changedOrder == null) {
+                            //SOMETHING GETS WRONG
+                            finish()
+                        }
+                        order = changedOrder!!
+                        updateValues()
                     }
-                    order = changedOrder!!
-                    updateValues()
                 }
-            }
 
-        })
-        detailsSandwichExtraIngredientsRecyclerView.adapter = ingredientsDetailAdapter
+            })
+        detailsSandwichExtraIngredientsRecyclerView.adapter = ingredientDetailAdapter
         detailsSandwichExtraIngredientsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
 
-        promoDetailAdapter = PromoDetailsAdapter(applicationContext, mutableListOf())
+        promoDetailAdapter =
+            PromoDetailsAdapter(applicationContext, mutableListOf())
         detailsSandwichDiscountRecyclerView.adapter = promoDetailAdapter
         detailsSandwichDiscountRecyclerView.layoutManager = LinearLayoutManager(applicationContext) as RecyclerView.LayoutManager?
 
@@ -119,7 +125,7 @@ class SandwichDetailsActivity : BaseActivity() {
                 finish()
             }
             order.sandwich = sandwich
-
+            order.sandwichId = sandwich!!.id
             initializeHeader()
             initializeContent()
 
@@ -131,7 +137,7 @@ class SandwichDetailsActivity : BaseActivity() {
 
         ingredientViewModel.getAllIngredients().observe(this, Observer { ingredientsList ->
             if(ingredientsList.isNotEmpty()){
-                ingredientsDetailAdapter.refresh(ingredientsList.toMutableList())
+                ingredientDetailAdapter.refresh(ingredientsList.toMutableList())
             }
         })
 
@@ -185,9 +191,9 @@ class SandwichDetailsActivity : BaseActivity() {
     }
 
     private fun updateValues(){
-        supportActionBar?.title = order.getSandwichRealName()
+        supportActionBar?.title = OrderPolicy.getSandwichRealName(order)
 
-        detailsSandwichNameTextView.text = order.getSandwichRealName()
+        detailsSandwichNameTextView.text = OrderPolicy.getSandwichRealName(order)
         detailsSandwichIngredientsTextView.text = android.text.TextUtils.join(", ", order.sandwich?.ingredientList)
         detailsSandwichIngredientsPriceTextView.text = PriceUtils.getFormattedPrice(PriceUtils.getPriceFromIngredients(order.sandwich?.ingredientList))
         detailsSandwichExtraIngredientsPriceTextView.text = PriceUtils.getFormattedPrice(PriceUtils.getPriceFromIngredients(order.extraIngredientList))

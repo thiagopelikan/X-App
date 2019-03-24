@@ -2,9 +2,8 @@ package br.com.pelikan.xapp.sync.repository.dummy
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import br.com.pelikan.xapp.models.DataContext
-import br.com.pelikan.xapp.models.Order
+import br.com.pelikan.xapp.sync.payload.DataContextResponseJson
 import br.com.pelikan.xapp.sync.repository.SyncRepository
 import br.com.pelikan.xapp.utils.FileUtils
 import com.google.gson.Gson
@@ -17,16 +16,25 @@ class DummySyncRepository : SyncRepository {
 
     override fun sync(
         lastUpdate: Long,
-        newOrder: Order?): Observable<DataContext> {
+        sandwichId : Int?,
+        extraIngredientIdList : List<Int>?,
+        price : Double?): Observable<DataContext> {
 
         val subject = PublishSubject.create<DataContext>()
 
         try {
-            val dummyDataContext = Gson().fromJson<DataContext>(FileUtils.readJsonFromAssetsFile("dummy_context.json"), DataContext::class.java)
-            Log.d("TAG", "DUMMY DATA CONTEXT " + dummyDataContext.lastUpdate);
-
-            Handler(Looper.getMainLooper()).postDelayed(Runnable { subject.onNext(dummyDataContext) }, 500)
-
+            if(sandwichId == null) {
+                val dummyDataContext = Gson().fromJson<DataContextResponseJson>(
+                    FileUtils.readJsonFromAssetsFile("dummy_context.json"),
+                    DataContextResponseJson::class.java
+                )
+                Handler(Looper.getMainLooper()).postDelayed(
+                    Runnable { subject.onNext(dummyDataContext.toObject()) },
+                    500
+                )
+            }else{
+                Handler(Looper.getMainLooper()).postDelayed(Runnable { subject.onError(Exception("Adding is not supported on dummy server")) }, 500)
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             Handler().postDelayed(Runnable { subject.onError(e) }, 500)

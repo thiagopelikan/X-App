@@ -1,4 +1,4 @@
-package br.com.pelikan.xapp.ui.main.adapter
+package br.com.pelikan.xapp.ui.details.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.models.Ingredient
-import br.com.pelikan.xapp.ui.main.`interface`.IngredientItemOnChangeListener
+import br.com.pelikan.xapp.ui.details.interfaces.IngredientItemOnChangeListener
 import br.com.pelikan.xapp.utils.PriceUtils
 import kotlinx.android.synthetic.main.layout_ingredient_details_item.view.*
 
-class IngredientsDetailAdapter
+class IngredientDetailAdapter
     (
         private val context: Context,
         private val ingredientList: MutableList<Ingredient>,
         private val ingredientItemOnChangeListener: IngredientItemOnChangeListener
-    ) : Adapter<IngredientsDetailAdapter.ViewHolder>(){
+    ) : Adapter<IngredientDetailAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.layout_ingredient_details_item, parent, false)

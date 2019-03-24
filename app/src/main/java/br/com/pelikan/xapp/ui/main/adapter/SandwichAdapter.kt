@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.models.Sandwich
-import br.com.pelikan.xapp.ui.main.`interface`.SandwichItemClickListener
+import br.com.pelikan.xapp.ui.main.interfaces.SandwichItemClickListener
 import br.com.pelikan.xapp.utils.GlideApp
 import br.com.pelikan.xapp.utils.PriceUtils
 import kotlinx.android.synthetic.main.layout_sandwich_item.view.*

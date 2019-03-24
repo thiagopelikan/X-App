@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.pelikan.xapp.R
-import br.com.pelikan.xapp.ui.main.adapter.PromosAdapter
+import br.com.pelikan.xapp.ui.main.adapter.PromoAdapter
 import br.com.pelikan.xapp.viewmodel.PromoViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class PromosFragment : BaseFragment() {
 
-    private lateinit var adapter : PromosAdapter
+    private lateinit var adapter : PromoAdapter
     private lateinit var promosViewModel: PromoViewModel
     private var shouldSkipAnimation : Boolean = false
 
@@ -25,9 +25,9 @@ class PromosFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = PromosAdapter(context!!.applicationContext, mutableListOf())
+        adapter = PromoAdapter(context!!.applicationContext, mutableListOf())
         mainRecyclerView.adapter = adapter
-        mainRecyclerView.layoutManager = LinearLayoutManager(context!!.applicationContext) as RecyclerView.LayoutManager?
+        mainRecyclerView.layoutManager = LinearLayoutManager(context!!.applicationContext)
 
         promosViewModel = ViewModelProviders.of(this).get(PromoViewModel::class.java)
 

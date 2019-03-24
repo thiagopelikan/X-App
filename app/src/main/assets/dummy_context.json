@@ -104,8 +104,8 @@
     "orders":[
         {
             "id":1,
-            "sandwichId":2,
-            "extraIngredientIdList":[5,5,3],
+            "id_sandwich":2,
+            "extras":[5,5,3],
             "price":10
         }
     ],

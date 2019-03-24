@@ -31,8 +31,8 @@ class OrderViewModel(application: Application) : BaseViewModel(application) {
             if (ordersListLive != null) {
                 Thread(kotlinx.coroutines.Runnable {
                     for (order in ordersListLive) {
-                        order.sandwich = sandwichDao.getSandwich(order.sandwichId!!)
-                        order.sandwich!!.ingredientList = sandwichIngredientDao.getIngredientsFromSandwich(order.sandwichId!!)
+                        order.sandwich = sandwichDao.getSandwich(order.sandwichId)
+                        order.sandwich!!.ingredientList = sandwichIngredientDao.getIngredientsFromSandwich(order.sandwichId)
                         order.sandwich!!.price = PriceUtils.getPriceFromIngredients(order.sandwich!!.ingredientList)
 
                         order.extraIngredientList = orderIngredientDao.getExtraIngredientsFromOrder(order.id).toMutableList()
@@ -52,26 +52,19 @@ class OrderViewModel(application: Application) : BaseViewModel(application) {
     fun handleExtraIngredientAsync(order : Order, extraIngredientId : Int, extraIngredientQuantity : Int, promoList : List<Promotion>? ): Deferred<Order?> {
         return CoroutineScope(Dispatchers.IO).async {
 
-            var extraIngredientQuantity = extraIngredientQuantity
+            var extraIngredientQty = extraIngredientQuantity
 
             if(order.extraIngredientList == null){
                 order.extraIngredientList = arrayListOf()
             }
 
-            if(order.extraIngredientIdList == null){
-                order.extraIngredientIdList = arrayListOf()
-            }
-
             order.extraIngredientList!!.removeAll { ingredient ->  ingredient.id == extraIngredientId}
-            order.extraIngredientIdList!!.removeAll { ingredientId ->  ingredientId == extraIngredientId}
-
             val ingredient = ingredientDao.getIngredient(extraIngredientId)
 
             if (ingredient != null) {
-                while (extraIngredientQuantity > 0) {
+                while (extraIngredientQty > 0) {
                     order.extraIngredientList!!.add(ingredient)
-                    order.extraIngredientIdList!!.add(ingredient.id)
-                    extraIngredientQuantity--
+                    extraIngredientQty --
                 }
             }
 

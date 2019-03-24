@@ -2,8 +2,8 @@ package br.com.pelikan.xapp.sync.repository.server
 
 import br.com.pelikan.xapp.models.DataContext
 import br.com.pelikan.xapp.models.Order
-import br.com.pelikan.xapp.sync.json.DataContextBodyJson
-import br.com.pelikan.xapp.sync.json.DataContextResponseJson
+import br.com.pelikan.xapp.sync.payload.DataContextBodyPayload
+import br.com.pelikan.xapp.sync.payload.DataContextResponseJson
 import br.com.pelikan.xapp.sync.repository.SyncRepository
 import br.com.pelikan.xapp.sync.services.XAppApi
 import io.reactivex.Observable
@@ -17,18 +17,13 @@ class ServerSyncRepository : SyncRepository {
 
     override fun sync(
         lastUpdate: Long,
-        newOrder: Order?): Observable<DataContext> {
+        sandwichId : Int?,
+        extraIngredientIdList : List<Int>?,
+        price : Double?): Observable<DataContext> {
 
         val subject = PublishSubject.create<DataContext>()
 
-        var syncBodyJson : DataContextBodyJson
-        if(newOrder == null){
-            syncBodyJson = DataContextBodyJson(lastUpdate)
-        }else{
-            syncBodyJson = DataContextBodyJson(lastUpdate, newOrder.sandwich!!.id, newOrder.extraIngredientIdList, newOrder.price)
-        }
-
-        val call = XAppApi.services.sync(syncBodyJson)
+        val call = XAppApi.services.sync(DataContextBodyPayload(lastUpdate, sandwichId, extraIngredientIdList, price))
 
         call.enqueue(object : Callback<DataContextResponseJson> {
             override fun onResponse(call: Call<DataContextResponseJson>, response: Response<DataContextResponseJson>) {

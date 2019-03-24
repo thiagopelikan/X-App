@@ -65,16 +65,16 @@ abstract class XAppDatabase : RoomDatabase() {
         }
 
         fun populateSandwiches(sandwichDao: SandwichDao) {
-            var sandwich = Sandwich(1, "X-Bacon", "https://goo.gl/W9WdaF", emptyList())
+            var sandwich = Sandwich(1, "X-Bacon", "https://goo.gl/W9WdaF")
             sandwichDao.insert(sandwich)
 
-            var sandwich2 = Sandwich(2, "X-Burger", "https://goo.gl/Cjfxi9", emptyList())
+            var sandwich2 = Sandwich(2, "X-Burger", "https://goo.gl/Cjfxi9")
             sandwichDao.insert(sandwich2)
 
-            var sandwich3 = Sandwich(3, "X-Egg", "https://goo.gl/x4rNIq", emptyList())
+            var sandwich3 = Sandwich(3, "X-Egg", "https://goo.gl/x4rNIq")
             sandwichDao.insert(sandwich3)
 
-            var sandwich4 = Sandwich(4, "X-Egg Bacon", "https://goo.gl/2L0lqg", emptyList())
+            var sandwich4 = Sandwich(4, "X-Egg Bacon", "https://goo.gl/2L0lqg")
             sandwichDao.insert(sandwich4)
         }
 

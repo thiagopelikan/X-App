@@ -55,7 +55,18 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : Worker(cont
         val countDownLatch = CountDownLatch(1)
 
         val lastUpdate = XAppApplication.getSharedPreferences().getLong(PREFS_LAST_UPDATE, 0);
-        val subscribe = Repository.with().forSync().sync(lastUpdate, order).subscribe(
+
+        val extraIngredientIdList : MutableList<Int>?
+        if((order != null) && (order!!.extraIngredientList != null)){
+            extraIngredientIdList = mutableListOf()
+            for(ingredient in order!!.extraIngredientList!!){
+                extraIngredientIdList.add(ingredient.id)
+            }
+        }else{
+            extraIngredientIdList = null
+        }
+
+        val subscribe = Repository.with().forSync().sync(lastUpdate, order?.sandwichId, extraIngredientIdList, order?.price).subscribe(
             { dataContext ->
                     scope.launch(Dispatchers.IO) {
 
@@ -108,8 +119,8 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : Worker(cont
 
     private fun insertSandwich(sandwich: Sandwich) {
         sandwichDao.insert(sandwich)
-        for (ingredientId in sandwich.ingredientIdList) {
-            val join = SandwichIngredient(sandwich.id, ingredientId)
+        for (ingredient in sandwich.ingredientList) {
+            val join = SandwichIngredient(sandwich.id, ingredient.id)
             sandwichIngredientDao.insert(join);
         }
     }
@@ -131,9 +142,9 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : Worker(cont
 
     private fun insertOrder(order: Order) {
         orderDao.insert(order)
-        if(order.extraIngredientIdList != null) {
-            for (ingredientId in order.extraIngredientIdList!!) {
-                val join = OrderIngredientExtras(order.id, ingredientId)
+        if(order.extraIngredientList != null) {
+            for (ingredient in order.extraIngredientList!!) {
+                val join = OrderIngredientExtras(order.id, ingredient.id)
                 orderIngredientExtrasDao.insert(join);
             }
         }

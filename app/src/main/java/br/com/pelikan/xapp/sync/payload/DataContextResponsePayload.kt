@@ -1,4 +1,4 @@
-package br.com.pelikan.xapp.sync.json
+package br.com.pelikan.xapp.sync.payload
 
 import br.com.pelikan.xapp.models.*
 import com.google.gson.annotations.SerializedName
@@ -44,7 +44,15 @@ class OrderResponseJson(
     ) : BaseResponseJson<Order>() {
 
     override fun toObject() : Order{
-        return Order(id, price, sandwichId, extrasIngredientIdList as MutableList<Int>);
+        val ingredients = ArrayList<Ingredient>()
+        if(extrasIngredientIdList != null) {
+            for (ingredientId in extrasIngredientIdList) {
+                ingredients.add(Ingredient(ingredientId))
+            }
+        }
+        val order = Order(id, price, sandwichId)
+        order.extraIngredientList = ingredients
+        return order;
     }
 }
 
@@ -79,12 +87,12 @@ class SandwichResponseJson (
 ) : BaseResponseJson<Sandwich>() {
 
     override fun toObject() : Sandwich{
-        val ingredients = ArrayList<Int>()
+        val ingredients = ArrayList<Ingredient>()
         for(ingredientId in ingredientList){
-            ingredients.add(ingredientId)
+            ingredients.add(Ingredient(ingredientId))
         }
-        val sandwich = Sandwich(id, name, image, emptyList())
-        sandwich.ingredientIdList = ingredients
+        val sandwich = Sandwich(id, name, image)
+        sandwich.ingredientList = ingredients
         return sandwich;
     }
 }

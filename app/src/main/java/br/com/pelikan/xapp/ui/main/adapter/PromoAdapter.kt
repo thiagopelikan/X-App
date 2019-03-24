@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.pelikan.xapp.R
 import br.com.pelikan.xapp.models.Promotion
-import kotlinx.android.synthetic.main.layout_promo_details_item.view.*
+import kotlinx.android.synthetic.main.layout_promo_item.view.*
 
-class PromoDetailsAdapter
+class PromoAdapter
     (
         private val context: Context,
         private val promoList: MutableList<Promotion>
-    ) : Adapter<PromoDetailsAdapter.ViewHolder>(){
+    ) : Adapter<PromoAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.layout_promo_details_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.layout_promo_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -30,18 +30,16 @@ class PromoDetailsAdapter
         holder.bindView(context.applicationContext, promo)
     }
 
-    fun refresh(promoList: MutableList<Promotion>?) {
+    fun refresh(promoList: MutableList<Promotion>) {
         this.promoList.clear()
-        if(promoList != null) {
-            this.promoList.addAll(promoList)
-        }
+        this.promoList.addAll(promoList)
         notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(context: Context, promotion: Promotion) {
-            itemView.promoItemNameTextView.text = promotion.name
-            itemView.promoItemPriceTextView.text = promotion.description
+            itemView.promoTitleTextView.text = promotion.name
+            itemView.promoDescriptionTextView.text = promotion.description
         }
     }
 

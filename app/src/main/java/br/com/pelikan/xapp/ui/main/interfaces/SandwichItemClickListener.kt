@@ -1,4 +1,4 @@
-package br.com.pelikan.xapp.ui.main.`interface`
+package br.com.pelikan.xapp.ui.main.interfaces
 
 import android.view.View
 
